@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
-
+import Zoom from "react-reveal/Zoom";
 import styled from "styled-components";
 import Spinner from "./Spinner";
 export class News extends Component {
@@ -18,7 +18,8 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=1pageSize=20`;
+    this.props.setProgress(0);
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=1pageSize=20`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -28,15 +29,15 @@ export class News extends Component {
       totalResults: parsedData.totalResults,
       loading: false,
     });
+    this.props.setProgress(100);
   }
 
   handlePrevClick = async () => {
+    this.props.setProgress(0);
     console.log("Previous");
     let url = `https://newsapi.org/v2/top-headlines?country=${
       this.props.country
-    }&category=${
-      this.props.category
-    }&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=${
+    }&category=${this.props.category}&apiKey=${this.props.apikey}&page=${
       this.state.page - 1
     }&pageSize=20`;
     this.setState({ loading: true });
@@ -48,16 +49,16 @@ export class News extends Component {
       articles: parsedData.articles,
       loading: false,
     });
+    this.props.setProgress(100);
   };
 
   handleNextClick = async () => {
+    this.props.setProgress(0);
     console.log("Next");
     if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / 20))) {
       let url = `https://newsapi.org/v2/top-headlines?country=${
         this.props.country
-      }&category=${
-        this.props.category
-      }&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=${
+      }&category=${this.props.category}&apiKey=${this.props.apikey}&page=${
         this.state.page + 1
       }&pageSize=20`;
       this.setState({ loading: true });
@@ -70,6 +71,7 @@ export class News extends Component {
         loading: false,
       });
     }
+    this.props.setProgress(100);
   };
 
   render() {
@@ -90,16 +92,21 @@ export class News extends Component {
                 {!this.state.loading &&
                   this.state.articles.map((element) => {
                     return (
-                      <NewsItem
-                        background={background}
-                        color={color}
-                        title={element.title ? element.title : ""}
-                        description={
-                          element.description ? element.description : ""
-                        }
-                        imageUrl={element.urlToImage}
-                        newsUrl={element.url}
-                      />
+                      <div style={{ width: "100%", margin: "13px 2px" }}>
+                        <NewsItem
+                          background={background}
+                          color={color}
+                          title={element.title ? element.title : ""}
+                          description={
+                            element.description ? element.description : ""
+                          }
+                          imageUrl={element.urlToImage}
+                          newsUrl={element.url}
+                          source={element.source.name}
+                          author={element.author}
+                          date={element.publishedAt.slice(0, 10)}
+                        />
+                      </div>
                     );
                   })}
               </Flex>
@@ -140,6 +147,5 @@ const Flex = styled.div`
   flex-direction: row;
   @media (max-width: 765px) {
     flex-direction: column;
-    padding-left: 5rem;
   }
 `;

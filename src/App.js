@@ -7,8 +7,10 @@ import React, { useState } from "react";
 import Footer from "./Components/Footer";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Components/Home";
-import TopNews from "./Components/TopNews";
+import LoadingBar from "react-top-loading-bar";
+
 function App() {
+  const apikey = process.env.REACT_APP_NEWA_API;
   const [text, setText] = useState("Enable");
   const [state, setstate] = useState({
     background: "white",
@@ -31,6 +33,10 @@ function App() {
     }
     console.log(state);
   };
+  const [prg, setprg] = useState(0);
+  const setProgress = (prg) => {
+    setprg(prg);
+  };
 
   return (
     <>
@@ -38,6 +44,7 @@ function App() {
         <Container>
           <div className="App">
             <NavBar background={state.background} color={state.color} />
+            <LoadingBar color="#f11946" progress={prg} />
             <Dark style={{ background: state.background }}>
               <DarkItems
                 style={{ background: state.background, color: state.color }}
@@ -55,20 +62,24 @@ function App() {
               </DarkItems>
             </Dark>
             <Switch>
-              <Route exact path="/topnews">
-                <News
-                  key={"sports"}
-                  background={state.background}
-                  color={state.color}
-                  country="in"
-                  category=""
-                />
-              </Route>
               <Route exact path="/">
                 <Home />
               </Route>
+              <Route exact path="/topnews">
+                <News
+                  apikey={apikey}
+                  setProgress={setProgress}
+                  key={"gene"}
+                  background={state.background}
+                  color={state.color}
+                  country="in"
+                  category="general"
+                />
+              </Route>
               <Route exact path="/sport">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"sports"}
                   background={state.background}
                   color={state.color}
@@ -78,6 +89,8 @@ function App() {
               </Route>
               <Route exact path="/technology">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"tech"}
                   background={state.background}
                   color={state.color}
@@ -87,6 +100,8 @@ function App() {
               </Route>
               <Route exact path="/business">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"busi"}
                   background={state.background}
                   color={state.color}
@@ -96,6 +111,8 @@ function App() {
               </Route>
               <Route exact path="/entertainment">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"en"}
                   background={state.background}
                   color={state.color}
@@ -105,6 +122,8 @@ function App() {
               </Route>
               <Route exact path="/general">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"gen"}
                   background={state.background}
                   color={state.color}
@@ -114,6 +133,8 @@ function App() {
               </Route>
               <Route exact path="/health">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"health"}
                   background={state.background}
                   color={state.color}
@@ -123,6 +144,8 @@ function App() {
               </Route>
               <Route exact path="/science">
                 <News
+                  apikey={apikey}
+                  setProgress={setProgress}
                   key={"sci"}
                   background={state.background}
                   color={state.color}
@@ -151,7 +174,7 @@ const Container = styled.div`
   margin: 0px;
 `;
 const Dark = styled.div`
-  padding: 2px;
+  padding-top: 3.4rem;
   display: flex;
   justify-content: flex-end;
 
