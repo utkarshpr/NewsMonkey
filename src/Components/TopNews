@@ -3,10 +3,9 @@ import NewsItem from "./NewsItem";
 
 import styled from "styled-components";
 import Spinner from "./Spinner";
-export class News extends Component {
+export class TopNews extends Component {
   static defaultProps = {
     country: "in",
-    category: "",
   };
   constructor() {
     super();
@@ -18,7 +17,7 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=1pageSize=20`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=1pageSize=20`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -34,8 +33,6 @@ export class News extends Component {
     console.log("Previous");
     let url = `https://newsapi.org/v2/top-headlines?country=${
       this.props.country
-    }&category=${
-      this.props.category
     }&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=${
       this.state.page - 1
     }&pageSize=20`;
@@ -55,8 +52,6 @@ export class News extends Component {
     if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / 20))) {
       let url = `https://newsapi.org/v2/top-headlines?country=${
         this.props.country
-      }&category=${
-        this.props.category
       }&apiKey=a6f30bf16cc241dda6f2810d1c019a02&page=${
         this.state.page + 1
       }&pageSize=20`;
@@ -132,7 +127,7 @@ export class News extends Component {
   }
 }
 
-export default News;
+export default TopNews;
 const Flex = styled.div`
   display: flex;
 

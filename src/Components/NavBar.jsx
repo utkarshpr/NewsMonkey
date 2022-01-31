@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function NavBar(props) {
   return (
     <div>
       <nav className="navbar  navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
-          <a href="#" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             NewsMonkey
-          </a>
+          </Link>
 
           <button
             type="button"
@@ -19,22 +20,32 @@ function NavBar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav">
-              <a href="/" className="nav-item nav-link ">
-                Home
-              </a>
-              <a href="/" className="nav-item nav-link">
-                Profile
-              </a>
-              <a href="/" className="nav-item nav-link">
-                Messages
-              </a>
-              <a href="/" className="nav-item nav-link ">
-                Reports
-              </a>
+              <Link to="/topnews" className="nav-item nav-link">
+                TopHeadLines
+              </Link>
+              <Link to="/business" className="nav-item nav-link">
+                Business
+              </Link>
+              <Link to="/entertainment" className="nav-item nav-link">
+                Entertainment
+              </Link>
+
+              <Link to="/health" className="nav-item nav-link">
+                Health
+              </Link>
+              <Link to="/science" className="nav-item nav-link">
+                Science
+              </Link>
+              <Link to="/sport" className="nav-item nav-link">
+                Sport
+              </Link>
+              <Link to="/technology" className="nav-item nav-link">
+                Technology
+              </Link>
             </div>
 
             {/* <div className="navbar-nav ms-auto">
-                <a href="/" className="nav-item nav-link">Login</a>
+                <Link to="/" className="nav-item nav-link">Login</Link>
             </div> */}
           </div>
         </div>
