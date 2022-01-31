@@ -63,7 +63,7 @@ function App() {
             </Dark>
             <Switch>
               <Route exact path="/">
-                <Home />
+                <Home background={state.background} color={state.color} />
               </Route>
               <Route exact path="/topnews">
                 <News
